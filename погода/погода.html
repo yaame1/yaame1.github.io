@@ -1,0 +1,83 @@
+<html>
+
+<head>
+     <title></title>
+</head>
+
+
+<body>
+
+     <script>
+
+          const apiKey = '690d9e294b6ff391c8fed39840850187';
+
+
+          async function getweather() {
+               document.getElementById("temp").innerHTML = "Загрузка...";
+               const city = document.getElementById("cityName").value;
+               document.getElementById("cityName").value = "";
+               const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=en`;
+
+               const response = await fetch(apiUrl);
+               if (!response.ok) {
+                    console.log("Error")
+               } else {
+                    const data = await response.json();
+                    console.log("Temp in city", city, Math.floor(data.main.temp - 273));
+                    document.getElementById("temp").innerHTML = Math.floor(data.main.temp - 273);
+                    document.getElementById("description").innerHTML = data.weather[0].description;
+               }
+          }
+     </script>
+     <style>
+          .container {
+               border-radius: 30px;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               gap: 20 px;
+               background-color: skyblue;
+               margin: 100px 350px 0 350px;
+               padding-top: 25px;
+          }
+
+          .temperature {
+               font-size: 70px !important;
+          }
+
+          .cityInput {
+               height: 30px;
+          }
+
+
+          body {
+               background-image: linear-gradient(to right, magenta, rgb(37, 113, 184));
+          }
+
+          h1,
+          h2,
+          h3 {
+               font-family: "Calibri"
+          }
+
+          ;
+
+          h1 {
+               font-size: 40 px
+          }
+
+          ;
+     </style>
+     <div class="container">
+          <hq>Weather</hq>
+          <h2>Weather today:</h2>
+          <input type="text" class="cityInput " size="20" id="cityName">
+          <button id="submit" onclick="getweather()">Тык</button>
+          <h2 id="temp" class="temperature"></h2>
+          <h3 id="description"></h3>
+
+     </div>
+</body>
+
+</html>
